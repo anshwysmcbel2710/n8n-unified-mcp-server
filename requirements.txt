@@ -1,10 +1,8 @@
 # ── MCP Core ──────────────────────────────────────────────────────────────────
-mcp[cli]>=1.8.0
+mcp>=1.8.0
 
 # ── Web Framework ────────────────────────────────────────────────────────────
 fastapi>=0.115.0
-uvicorn[standard]>=0.32.0
-uvloop>=0.21.0 ; sys_platform != 'win32'  # High-performance event loop (Skipped on Windows)
 
 # ── HTTP Client ──────────────────────────────────────────────────────────────
 httpx>=0.28.0
@@ -20,11 +18,8 @@ tenacity>=9.0.0
 structlog>=24.4.0
 
 # ── Security ────────────────────────────────────────────────────────────────
-python-jose[cryptography]>=3.3.0
+python-jose>=3.3.0
 passlib>=1.7.4
-
-# ── Performance ──────────────────────────────────────────────────────────────
-orjson>=3.10.0                   # Faster JSON serialization
 
 # ── Type Checking ────────────────────────────────────────────────────────────
 typing-extensions>=4.12.0
