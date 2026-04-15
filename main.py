@@ -17,7 +17,6 @@ import time
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
-import uvicorn
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
@@ -269,19 +268,20 @@ logger.info("mcp_mounted", path="/mcp/sse")
 
 # ── Entry Point ───────────────────────────────────────────────────────────────
 if __name__ == "__main__":
-    # Check for CLI agent flag
+    # Check for CLI agent flag (Claude Code, etc.)
     if "--stdio" in sys.argv:
         logger.info("Starting in stdio mode for CLI agents...")
         mcp.run(transport="stdio")
     else:
-        # Run standard HTTP server for IDEs
+        # We only import uvicorn here so it doesn't crash Cloudflare
+        import uvicorn
+        
         logger.info("Starting HTTP/SSE server for IDE clients...")
         uvicorn.run(
             "main:app",
             host=settings.mcp_host,
             port=settings.mcp_port,
-            workers=1,  # Set >1 only via environment for production
+            workers=1,
             log_level=settings.log_level.lower(),
-            access_log=False, 
-            # Removed 'loop="uvloop"' to prevent Windows crashes
+            access_log=False,
         )
