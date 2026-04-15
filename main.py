@@ -262,7 +262,7 @@ async def clear_cache():
 # ── Mount MCP Server ──────────────────────────────────────────────────────────
 # Mount the FastMCP Server-Sent Events (SSE) app natively.
 # We mount it at "/mcp" so it doesn't overwrite your /health and /metrics endpoints!
-app.mount("/mcp", mcp.sse_app())
+app.mount("/mcp", mcp.app) 
 
 logger.info("mcp_mounted", path="/mcp/sse")
 
