@@ -1,0 +1,9 @@
+name = "n8n-unified-mcp-server"
+main = "main.py"
+compatibility_date = "2024-04-03"
+compatibility_flags = ["python_workers"]
+
+[vars]
+# Essential for production logging
+LOG_LEVEL = "INFO"
+LOG_FORMAT = "json"
