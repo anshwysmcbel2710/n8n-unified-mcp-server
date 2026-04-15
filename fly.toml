@@ -1,0 +1,45 @@
+# fly.toml — Fly.io deployment configuration
+# Deploy with: fly launch --no-deploy, then fly secrets set, then fly deploy
+
+app = "n8n-unified-mcp-server"
+primary_region = "sin"  # Singapore — closest to India
+
+[build]
+  dockerfile = "Dockerfile"
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = false   # Keep always-on for zero cold starts
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+  [http_service.concurrency]
+    type = "connections"
+    hard_limit = 200
+    soft_limit = 150
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"
+
+[env]
+  MCP_HOST = "0.0.0.0"
+  MCP_PORT = "8000"
+  LOG_FORMAT = "json"
+  LOG_LEVEL = "INFO"
+  CACHE_ENABLED = "true"
+  WORKERS = "4"
+
+[[services.tcp_checks]]
+  interval = "15s"
+  timeout = "10s"
+  grace_period = "10s"
+
+[[services.http_checks]]
+  interval = "15s"
+  timeout = "10s"
+  grace_period = "10s"
+  path = "/health"
+  method = "GET"

@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  mcp-server:
+    build:
+      context: .
+      target: production
+    container_name: n8n-unified-mcp-server
+    restart: unless-stopped
+    ports:
+      - "${MCP_PORT:-8000}:8000"
+    environment:
+      - N8N_BASE_URL=${N8N_BASE_URL:-http://host.docker.internal:5678}
+      - N8N_API_KEY=${N8N_API_KEY}
+      - MCP_BEARER_TOKEN=${MCP_BEARER_TOKEN}
+      - MCP_HOST=0.0.0.0
+      - MCP_PORT=8000
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - LOG_FORMAT=${LOG_FORMAT:-json}
+      - CACHE_ENABLED=true
+      - WORKERS=4
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mcp.rule=Host(`mcp.yourdomain.com`)"
