@@ -1,25 +1,25 @@
 # ── MCP Core ──────────────────────────────────────────────────────────────────
-mcp>=1.8.0
+mcp
 
 # ── Web Framework ────────────────────────────────────────────────────────────
-fastapi>=0.115.0
+fastapi
 
 # ── HTTP Client ──────────────────────────────────────────────────────────────
-httpx>=0.28.0
+httpx
 
 # ── Settings & Validation ────────────────────────────────────────────────────
-pydantic>=2.10.0
-pydantic-settings>=2.7.0
+pydantic
+pydantic-settings
 
 # ── Retry Logic ──────────────────────────────────────────────────────────────
-tenacity>=9.0.0
+tenacity
 
 # ── Structured Logging ───────────────────────────────────────────────────────
-structlog>=24.4.0
+structlog
 
 # ── Security ────────────────────────────────────────────────────────────────
-python-jose>=3.3.0
-passlib>=1.7.4
+python-jose
+passlib
 
 # ── Type Checking ────────────────────────────────────────────────────────────
-typing-extensions>=4.12.0
+typing-extensions
